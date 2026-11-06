@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import fr.altherneum.bot.Main;
 import fr.altherneum.bot.utils.Discord;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.utils.FileUpload;
@@ -50,7 +50,7 @@ public final class getYT {
     }
 
     public static void dumpVideoFromChannel(String channelID, int number) throws IOException {
-        TextChannel serverTextChannel = Discord.textChannel(channelID);
+        GuildMessageChannel serverTextChannel = Discord.textChannel(channelID);
 
         int count = 0;
         int total = 0;
@@ -126,7 +126,7 @@ public final class getYT {
         serverTextChannel.sendMessage("OK, ended loop").complete();
     }
 
-    private static List<Message> lastMessages(TextChannel channel, int number) {
+    private static List<Message> lastMessages(GuildMessageChannel channel, int number) {
         List<Message> messages = new ArrayList<>(channel.getIterableHistory().stream().limit(number).toList());
         Collections.reverse(messages);
         return messages;

@@ -17,7 +17,7 @@ public final class banqueRoute {
                     try {
                         event.reply("\uD83D\uDC8E Merci de patienter").queue();
                         int tryAmount = (int) Math.round(event.getOption("lancer").getAsDouble());
-                        casinoBanqueroute.doBanqueRoute(event.getUser(), event.getChannel().asTextChannel(), tryAmount);
+                        casinoBanqueroute.doBanqueRoute(event.getUser(), event.getChannel().asGuildMessageChannel(), tryAmount);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }

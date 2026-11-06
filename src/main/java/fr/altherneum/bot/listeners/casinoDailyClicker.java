@@ -40,11 +40,11 @@ public final class casinoDailyClicker {
                                             250, "Clique",
                                             passifs, passifGains, "Passifs 📆",
                                             dayliClaim, "Clique 🕙",
-                                            event.getChannel().asTextChannel()))
+                                            event.getChannel().asGuildMessageChannel()))
                                     .queue();
                         } else {
                             Discord.dm(user, "Vous avez **__déjà joué dans les dernières 24H__** au "
-                                    + event.getChannel().asTextChannel().getAsMention());
+                                    + event.getChannel().asGuildMessageChannel().getAsMention());
                         }
                     } else if (mentionTagEmoji.equals(IDs.EmojiCalendar)) { // passif
                         int playPassifAmount = casinoProfil.getPlayPassif(user);
@@ -53,11 +53,11 @@ public final class casinoDailyClicker {
                             Discord.textChannel(IDs.CasinoTextuelResultat)
                                     .sendMessageEmbeds(casinoProfil.gainGold(user, playPassifAmount,
                                             "Gains passifs",
-                                            event.getChannel().asTextChannel()))
+                                            event.getChannel().asGuildMessageChannel()))
                                     .queue();
                         } else {
                             Discord.dm(user, "Vous n'avez **__pas de gains passifs à récupérer__** au "
-                                    + event.getChannel().asTextChannel().getAsMention());
+                                    + event.getChannel().asGuildMessageChannel().getAsMention());
                         }
                     }
                 } catch (Exception exception) {

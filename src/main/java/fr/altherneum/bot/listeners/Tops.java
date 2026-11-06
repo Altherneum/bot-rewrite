@@ -15,7 +15,7 @@ import fr.altherneum.bot.utils.JsonFile;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 public final class Tops {
     public static ArrayList<User> users = new ArrayList<>();
@@ -133,11 +133,14 @@ public final class Tops {
                     EmbedBuilder embedBuilder = new EmbedBuilder();
                     embedBuilder.setDescription(msg);
 
-                    TextChannel channel = Discord.textChannel(IDs.Tops);
+                    GuildMessageChannel channel = Discord.textChannel(IDs.Tops);
                     long latest = channel.getLatestMessageIdLong();
                     if (latest != 0) {
-                        channel.retrieveMessageById(latest)
-                                .queue(message -> message.editMessageEmbeds(embedBuilder.build()).queue());
+                        channel.retrieveMessageById(latest).queue(message -> {
+                            if (Discord.isSelfMessage(message)) {
+                                message.editMessageEmbeds(embedBuilder.build()).queue();
+                            }
+                        });
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();

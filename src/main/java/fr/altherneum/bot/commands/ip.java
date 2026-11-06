@@ -5,6 +5,7 @@ import fr.altherneum.bot.config.IDs;
 import fr.altherneum.bot.utils.Discord;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -32,10 +33,10 @@ public final class ip {
         embedBuilder.setThumbnail(Main.jda.getSelfUser().getEffectiveAvatarUrl());
         embedBuilder.setTitle("📚 IP/DNS d'" + Main.jda.getSelfUser().getName());
         embedBuilder.addField("Adresse : ", "**__Altherneum.fr__**  ou  __**play**__.altherneum.fr", false);
-        net.dv8tion.jda.api.entities.channel.concrete.TextChannel minecraftInfo = Discord.textChannel(IDs.MinecraftInfo);
-        net.dv8tion.jda.api.entities.channel.concrete.TextChannel minecraftReboot = Discord.textChannel(IDs.MinecraftReboot);
-        net.dv8tion.jda.api.entities.channel.concrete.TextChannel minecraftUptime = Discord.textChannel(IDs.MinecraftUptime);
-        net.dv8tion.jda.api.entities.channel.concrete.TextChannel minecraftMAJ = Discord.textChannel(IDs.MinecraftMAJ);
+        GuildMessageChannel minecraftInfo = Discord.textChannel(IDs.MinecraftInfo);
+        GuildMessageChannel minecraftReboot = Discord.textChannel(IDs.MinecraftReboot);
+        GuildMessageChannel minecraftUptime = Discord.textChannel(IDs.MinecraftUptime);
+        GuildMessageChannel minecraftMAJ = Discord.textChannel(IDs.MinecraftMAJ);
 
         embedBuilder.addField("Salons : ", minecraftInfo.getAsMention() + "\n" + minecraftReboot.getAsMention() + "\n"
                 + minecraftUptime.getAsMention() + "\n" + minecraftMAJ.getAsMention(), false);

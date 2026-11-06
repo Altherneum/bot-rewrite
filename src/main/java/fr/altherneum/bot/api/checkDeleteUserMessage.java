@@ -4,7 +4,7 @@ import fr.altherneum.bot.config.IDs;
 import fr.altherneum.bot.utils.Discord;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 public final class checkDeleteUserMessage {
     private checkDeleteUserMessage() {
@@ -14,11 +14,11 @@ public final class checkDeleteUserMessage {
         Thread thread = new Thread(() -> {
             try {
                 Thread.sleep(10);
-                for (TextChannel channel : Discord.guild().getTextChannels()) {
+                for (GuildMessageChannel channel : Discord.textChannels()) {
                     for (Message message : channel.getIterableHistory().stream().toList()) {
                         Thread.sleep(100);
                         if (message.getAuthor().getId().equals(leaved.getId())) {
-                            TextChannel logs = Discord.textChannel(IDs.LogsCmd);
+                            GuildMessageChannel logs = Discord.textChannel(IDs.LogsCmd);
                             String name = Discord.tag(message.getAuthor());
                             String messageText = message.getContentRaw();
                             logs.sendMessage("**Suppression " + reason + "** : " + name + " par __"
@@ -34,7 +34,7 @@ public final class checkDeleteUserMessage {
         thread.start();
     }
 
-    public static void deleteAllMessageFromChannel(TextChannel serverTextChannel, String reason, User whoRun) {
+    public static void deleteAllMessageFromChannel(GuildMessageChannel serverTextChannel, String reason, User whoRun) {
         Thread thread = new Thread(() -> {
             logCommands.logCommandChannel("emptyChannel", reason, serverTextChannel, whoRun);
             for (Message message : serverTextChannel.getIterableHistory().stream().toList()) {

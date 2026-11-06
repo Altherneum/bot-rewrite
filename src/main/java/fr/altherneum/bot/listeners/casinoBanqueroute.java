@@ -12,7 +12,7 @@ import fr.altherneum.bot.utils.FileSystem;
 import fr.altherneum.bot.utils.JsonFile;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -34,7 +34,7 @@ public final class casinoBanqueroute {
                     event.getReaction().removeReaction(event.getUser()).queue();
 
                     if (mentionTagEmoji.equals(IDs.EmojiBanque)) {
-                        doBanqueRoute(event.getUser(), event.getChannel().asTextChannel(), true);
+                        doBanqueRoute(event.getUser(), event.getChannel().asGuildMessageChannel(), true);
                     }
                 } catch (Exception ignored) {
                     // Comportement identique à l'ancien bot.
@@ -43,7 +43,7 @@ public final class casinoBanqueroute {
         });
     }
 
-    public static void doBanqueRoute(User user, TextChannel serverTextChannel, int amount) {
+    public static void doBanqueRoute(User user, GuildMessageChannel serverTextChannel, int amount) {
         Thread thread = new Thread(() -> {
             try {
                 boolean win = false;
@@ -76,7 +76,7 @@ public final class casinoBanqueroute {
         thread.start();
     }
 
-    public static boolean doBanqueRoute(User user, TextChannel serverTextChannel, boolean message) throws IOException {
+    public static boolean doBanqueRoute(User user, GuildMessageChannel serverTextChannel, boolean message) throws IOException {
         int gold = casinoProfil.getGold(user);
         int total = getTotal();
         int cost = getCost();
@@ -148,11 +148,14 @@ public final class casinoBanqueroute {
 
         embedBuilder.setDescription(message);
 
-        TextChannel channel = Discord.textChannel(IDs.CasinoBanqueRoute);
+        GuildMessageChannel channel = Discord.textChannel(IDs.CasinoBanqueRoute);
         long latest = channel.getLatestMessageIdLong();
         if (latest != 0) {
-            channel.retrieveMessageById(latest).queue(messageById -> messageById.editMessageEmbeds(embedBuilder.build())
-                    .queue());
+            channel.retrieveMessageById(latest).queue(messageById -> {
+                if (Discord.isSelfMessage(messageById)) {
+                    messageById.editMessageEmbeds(embedBuilder.build()).queue();
+                }
+            });
         }
     }
 

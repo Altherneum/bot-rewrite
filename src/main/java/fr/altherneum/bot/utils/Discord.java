@@ -1,6 +1,8 @@
 package fr.altherneum.bot.utils;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Objects;
 
 import fr.altherneum.bot.Main;
@@ -8,11 +10,14 @@ import fr.altherneum.bot.config.IDs;
 import net.dv8tion.jda.api.entities.ApplicationInfo;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.Category;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 
 /**
@@ -30,8 +35,43 @@ public final class Discord {
         return require(Main.jda.getGuildById(id), "Serveur " + id);
     }
 
-    public static TextChannel textChannel(String id) {
-        return require(Main.jda.getTextChannelById(id), "Salon " + id);
+    /**
+     * Retrouve un salon textuel ou d'annonces.
+     *
+     * <p>JavaCord exposait les salons {@code GUILD_TEXT} et {@code GUILD_NEWS}
+     * sous le même type {@code ServerTextChannel}. JDA les sépare en
+     * {@code TextChannel} et {@code NewsChannel} : on renvoie donc leur
+     * supertype commun, qui garde toutes les opérations utilisées par le bot
+     * (envoi, historique, invitation, mention...).
+     */
+    public static StandardGuildMessageChannel textChannel(String id) {
+        return require(textChannelOrNull(id), "Salon " + id);
+    }
+
+    public static StandardGuildMessageChannel textChannelOrNull(String id) {
+        GuildChannel channel = Main.jda.getGuildChannelById(id);
+        return channel instanceof StandardGuildMessageChannel messageChannel ? messageChannel : null;
+    }
+
+    /**
+     * Équivalent de {@code Server#getTextChannels()} JavaCord : salons texte
+     * et salons d'annonces.
+     */
+    public static List<GuildMessageChannel> textChannels() {
+        List<GuildMessageChannel> channels = new ArrayList<>();
+        channels.addAll(guild().getTextChannels());
+        channels.addAll(guild().getNewsChannels());
+        return channels;
+    }
+
+    /**
+     * Discord n'autorise un bot à modifier que ses propres messages. JDA lève
+     * une exception locale avant l'appel REST, contrairement à JavaCord qui
+     * laissait simplement échouer la requête. On évite donc de tenter l'édition
+     * des messages d'un autre compte bot (cas d'un changement de token).
+     */
+    public static boolean isSelfMessage(Message message) {
+        return message != null && message.getAuthor().getIdLong() == Main.jda.getSelfUser().getIdLong();
     }
 
     public static Category category(String id) {

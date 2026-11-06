@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 public final class casinoProfil {
     private casinoProfil() {
@@ -91,7 +91,7 @@ public final class casinoProfil {
         return embedBuilder.build();
     }
 
-    public static MessageEmbed gainGold(User user, int montant, String text, TextChannel textChannel) {
+    public static MessageEmbed gainGold(User user, int montant, String text, GuildMessageChannel textChannel) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("\uD83C\uDFB0 Casino \uD83C\uDFB2 \uD83C\uDFB3");
         embedBuilder.setDescription(textChannel.getAsMention() + " " + Discord.mention(user));
@@ -113,7 +113,7 @@ public final class casinoProfil {
             int montant, String text, int montant2,
             int montant3, String text2,
             int montant4, String text3,
-            TextChannel textChannel) {
+            GuildMessageChannel textChannel) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("\uD83C\uDFB0 Casino \uD83C\uDFB2 \uD83C\uDFB3");
         embedBuilder.setDescription(textChannel.getAsMention() + " " + Discord.mention(user));

@@ -1,10 +1,11 @@
 package fr.altherneum.bot.commands;
 
 import fr.altherneum.bot.Main;
+import fr.altherneum.bot.utils.Discord;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -21,10 +22,7 @@ public final class copyMessage {
                     try {
                         String id = event.getOption("message_id").getAsString();
                         String channelId = event.getOption("channel_id").getAsString();
-                        TextChannel target = Main.jda.getTextChannelById(channelId);
-                        if (target == null) {
-                            return;
-                        }
+                        GuildMessageChannel target = Discord.textChannel(channelId);
 
                         event.getChannel().retrieveMessageById(id).queue(message -> {
                             EmbedBuilder embedBuilder = new EmbedBuilder();

@@ -4,7 +4,7 @@ import fr.altherneum.bot.Main;
 import fr.altherneum.bot.config.IDs;
 import fr.altherneum.bot.utils.Discord;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -26,7 +26,7 @@ public final class casinoCoinFlip {
                     event.getReaction().removeReaction(event.getUser()).queue();
 
                     if (mentionTagEmoji.equals(IDs.EmojiCoin)) { // CoinFlip
-                        doCoinFlip(event.getUser(), event.getChannel().asTextChannel(), IDs.prixCoinFlip);
+                        doCoinFlip(event.getUser(), event.getChannel().asGuildMessageChannel(), IDs.prixCoinFlip);
                     }
                 } catch (Exception ignored) {
                     // Comportement identique à l'ancien bot.
@@ -35,7 +35,7 @@ public final class casinoCoinFlip {
         });
     }
 
-    public static int doCoinFlip(User user, TextChannel serverTextChannel, int prix) {
+    public static int doCoinFlip(User user, GuildMessageChannel serverTextChannel, int prix) {
         int goldAmount = casinoProfil.getGold(user);
         if (goldAmount >= prix) {
             double rng = Math.random();
@@ -68,7 +68,7 @@ public final class casinoCoinFlip {
                             prix = 0;
                         }
 
-                        int coinflipRes = doCoinFlip(event.getUser(), event.getChannel().asTextChannel(), prix);
+                        int coinflipRes = doCoinFlip(event.getUser(), event.getChannel().asGuildMessageChannel(), prix);
 
                         String str;
                         if (coinflipRes == 0) {

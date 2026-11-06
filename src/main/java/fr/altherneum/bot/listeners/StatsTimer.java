@@ -25,7 +25,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 public final class StatsTimer {
     private StatsTimer() {
@@ -120,11 +120,14 @@ public final class StatsTimer {
             embedBuilder.setDescription(finalMessage);
 
             if (timed) {
-                TextChannel textChannel = Discord.textChannel(IDs.Statistiques);
+                GuildMessageChannel textChannel = Discord.textChannel(IDs.Statistiques);
                 long latest = textChannel.getLatestMessageIdLong();
                 if (latest != 0) {
-                    textChannel.retrieveMessageById(latest)
-                            .queue(message -> message.editMessageEmbeds(embedBuilder.build()).queue());
+                    textChannel.retrieveMessageById(latest).queue(message -> {
+                        if (Discord.isSelfMessage(message)) {
+                            message.editMessageEmbeds(embedBuilder.build()).queue();
+                        }
+                    });
                 }
             } else {
                 Discord.textChannel(channel).sendMessageEmbeds(embedBuilder.build()).queue();

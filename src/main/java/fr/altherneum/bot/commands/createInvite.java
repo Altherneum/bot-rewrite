@@ -2,7 +2,7 @@ package fr.altherneum.bot.commands;
 
 import fr.altherneum.bot.Main;
 import fr.altherneum.bot.utils.Discord;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -18,10 +18,7 @@ public final class createInvite {
                     event.reply("\uD83D\uDC8E").queue();
                     try {
                         String id = event.getOption("channel_id").getAsString();
-                        TextChannel serverTextChannel = Main.jda.getTextChannelById(id);
-                        if (serverTextChannel == null) {
-                            return;
-                        }
+                        StandardGuildMessageChannel serverTextChannel = Discord.textChannel(id);
                         serverTextChannel.createInvite()
                                 .setMaxUses(0)
                                 .setMaxAge(0)

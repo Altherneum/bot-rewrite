@@ -8,23 +8,28 @@ import fr.altherneum.bot.utils.Discord;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 
 public final class messageUpdater {
     private messageUpdater() {
     }
 
     public static void copyMessage(String channel, String messageID, int messageNumber) {
-        TextChannel source = Discord.textChannel("1081950904644816956");
+        GuildMessageChannel source = Discord.textChannel("1081950904644816956");
         Message message = source.retrieveMessageById(messageID).complete();
-        TextChannel target = Discord.textChannel(channel);
+        GuildMessageChannel target = Discord.textChannel(channel);
         List<Message> messages = target.getHistory().retrievePast(messageNumber).complete();
         Message messageOld = messages.get(messages.size() - 1);
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setDescription(message.getContentRaw());
 
-        messageOld.editMessageEmbeds(embedBuilder.build()).queue();
+        if (Discord.isSelfMessage(messageOld)) {
+            messageOld.editMessageEmbeds(embedBuilder.build()).queue();
+        } else {
+            System.out.println("[messageUpdater] message " + messageOld.getId() + " ignoré : envoyé par "
+                    + messageOld.getAuthor().getName() + " (autre compte bot)");
+        }
 
         for (MessageReaction reaction : message.getReactions()) {
             messageOld.addReaction(reaction.getEmoji()).queue();

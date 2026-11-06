@@ -15,7 +15,7 @@ public final class EmptyChannel {
                 if (event.getName().equalsIgnoreCase("emptychannel")) {
                     try {
                         checkDeleteUserMessage.deleteAllMessageFromChannel(
-                                event.getChannel().asTextChannel(), "Commande manuel", event.getUser());
+                                event.getChannel().asGuildMessageChannel(), "Commande manuel", event.getUser());
                         event.reply("\uD83D\uDC8E").queue();
                     } catch (Exception exception) {
                         exception.printStackTrace();

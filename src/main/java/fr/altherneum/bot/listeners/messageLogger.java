@@ -7,7 +7,7 @@ import fr.altherneum.bot.utils.MessageCache;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.StandardGuildMessageChannel;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
@@ -30,7 +30,7 @@ public final class messageLogger {
             public void onMessageReceived(MessageReceivedEvent event) {
                 MessageCache.put(event.getMessage());
                 if (event.getAuthor().isBot() || event.isWebhookMessage()
-                        || !(event.getChannel() instanceof TextChannel channel)) {
+                        || !(event.getChannel() instanceof StandardGuildMessageChannel channel)) {
                     return;
                 }
                 Discord.textChannel(IDs.LogsMessage).sendMessageEmbeds(embed("__**Message crée**__ : "
@@ -53,7 +53,7 @@ public final class messageLogger {
                 if (message == null || message.getAuthor().isBot()) {
                     return;
                 }
-                TextChannel channel = Main.jda.getTextChannelById(message.getChannel().getId());
+                StandardGuildMessageChannel channel = Discord.textChannelOrNull(message.getChannel().getId());
                 if (channel == null) {
                     return;
                 }
@@ -78,7 +78,7 @@ public final class messageLogger {
                     MessageCache.put(newMessage);
                     return;
                 }
-                TextChannel channel = Main.jda.getTextChannelById(newMessage.getChannel().getId());
+                StandardGuildMessageChannel channel = Discord.textChannelOrNull(newMessage.getChannel().getId());
                 if (channel == null) {
                     MessageCache.put(newMessage);
                     return;

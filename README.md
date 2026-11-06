@@ -94,6 +94,20 @@ Les IDs du serveur, salons et rôles sont dans
 - Le stockage passe de YAML (Bukkit/Paper) à JSON, et la dépendance Paper a
   été supprimée.
 
+## Migration depuis l'ancien bot
+
+- Les salons **texte** et **annonces** (`GUILD_NEWS`) sont acceptés partout où
+  JavaCord exposait un `ServerTextChannel`. JDA les sépare en `TextChannel` et
+  `NewsChannel` ; le bot utilise leur supertype commun.
+- Si le nouveau bot utilise une **autre application Discord** que l'ancien, il
+  ne peut pas modifier les messages déjà envoyés par l'ancien compte bot.
+  Ces messages sont ignorés avec un log `[messageUpdater] ... ignoré` et le
+  démarrage continue. Pour conserver la mise à jour automatique des messages
+  modèles, utiliser le même token que l'ancien bot ou recréer ces messages avec
+  le nouveau bot.
+- Le message d'activation (`Le bot est en ligne`) et les autres nouveaux
+  messages fonctionnent quel que soit le compte bot utilisé.
+
 ## Structure
 
 ```text
