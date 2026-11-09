@@ -91,6 +91,11 @@ Les IDs du serveur, salons et rôles sont dans
   dans l'ancien bot (la condition d'origine comparait un `String` à un objet
   `ChannelCategory` et était donc toujours fausse). Ce comportement est
   volontairement conservé pour rester identique.
+- Le message « Le bot est reconnecté » n'est plus envoyé à chaque reprise de
+  session de la passerelle : Discord demande régulièrement au bot de se
+  reconnecter (opcode 7) pour rééquilibrer ses connexions, et JDA rejoue les
+  événements manqués sans que le bot soit réellement hors ligne. Le message
+  n'apparaît désormais que si la coupure a duré au moins 5 minutes.
 - Le stockage passe de YAML (Bukkit/Paper) à JSON, et la dépendance Paper a
   été supprimée.
 
