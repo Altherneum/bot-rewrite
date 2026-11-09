@@ -20,7 +20,7 @@ public final class bonusRoles {
             Role role = IDs.Rolemsg1000;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "1000 messages"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -34,7 +34,7 @@ public final class bonusRoles {
             Role role = IDs.Rolemsg200;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "200 messages"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -48,7 +48,7 @@ public final class bonusRoles {
             Role role = IDs.Rolemsg50;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "50 messages"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -62,7 +62,7 @@ public final class bonusRoles {
             Role role = IDs.Rolemsg10;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "10 messages"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -78,7 +78,7 @@ public final class bonusRoles {
             Role role = IDs.Roleinvites100;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "100 invitations"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -92,7 +92,7 @@ public final class bonusRoles {
             Role role = IDs.Roleinvites50;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "50 invitations"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -106,7 +106,7 @@ public final class bonusRoles {
             Role role = IDs.Roleinvites30;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "30 invitations"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
@@ -120,7 +120,7 @@ public final class bonusRoles {
             Role role = IDs.Roleinvites10;
             if (!Discord.hasRole(user, Discord.guild(), role)) {
                 Discord.guild().addRoleToMember(user, role).queue();
-                Discord.dmComplete(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
+                Discord.dm(user, Discord.mention(user) + IDs.MessageRoleGain + role.getName());
                 embedBuilder.setDescription(messages.LevelUP(user, role, "10 invitations"));
                 Discord.textChannel(IDs.Boost).sendMessageEmbeds(embedBuilder.build()).queue();
             }
