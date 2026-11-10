@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20251224</version>
+            <version>20260719</version>
         </dependency>
 
         <!-- Uniquement pour lire /DiscordBot/data/tokens.yml (même fichier que l'ancien bot). -->
