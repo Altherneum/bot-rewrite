@@ -33,7 +33,7 @@ public final class Events {
      * réellement hors ligne. On ne prévient donc le salon que si la coupure a
      * duré assez longtemps pour être visible par les membres.
      */
-    private static final long RECONNECT_NOTIFY_MIN_DOWNTIME_MS = 5 * 60 * 1000L;
+    private static final long RECONNECT_NOTIFY_MIN_DOWNTIME_MS = 1 * 60 * 1000L;
 
     private static volatile long disconnectedAt = 0L;
 
@@ -90,6 +90,8 @@ public final class Events {
             @Override
             public void onSessionDisconnect(SessionDisconnectEvent event) {
                 disconnectedAt = System.currentTimeMillis();
+                System.out.println("[reconnect] session déconnectée"
+                        + (event.getCloseCode() == null ? "" : " (code " + event.getCloseCode() + ")"));
             }
 
             @Override
@@ -107,9 +109,16 @@ public final class Events {
     private static void notifyReconnectIfSignificant() {
         long since = disconnectedAt;
         disconnectedAt = 0L;
-        if (since == 0L || System.currentTimeMillis() - since < RECONNECT_NOTIFY_MIN_DOWNTIME_MS) {
+        if (since == 0L) {
             return;
         }
+        long downtime = System.currentTimeMillis() - since;
+        if (downtime < RECONNECT_NOTIFY_MIN_DOWNTIME_MS) {
+            System.out.println("[reconnect] reprise après " + (downtime / 1000L)
+                    + "s : coupure trop courte, pas de message");
+            return;
+        }
+        System.out.println("[reconnect] reprise après " + (downtime / 1000L) + "s : message envoyé");
         sendReconnectMessage();
     }
 

@@ -95,7 +95,7 @@ Les IDs du serveur, salons et rôles sont dans
   session de la passerelle : Discord demande régulièrement au bot de se
   reconnecter (opcode 7) pour rééquilibrer ses connexions, et JDA rejoue les
   événements manqués sans que le bot soit réellement hors ligne. Le message
-  n'apparaît désormais que si la coupure a duré au moins 5 minutes.
+  n'apparaît désormais que si la coupure a duré au moins 1 minute.
 - Le stockage passe de YAML (Bukkit/Paper) à JSON, et la dépendance Paper a
   été supprimée.
 
