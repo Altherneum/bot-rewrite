@@ -35,7 +35,11 @@ public final class StatsTimer {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                buildMessage(true, IDs.Statistiques);
+                try {
+                    buildMessage(true, IDs.Statistiques);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         };
         Timer timer = new Timer();
@@ -43,6 +47,12 @@ public final class StatsTimer {
     }
 
     public static void buildMessage(boolean timed, String channel) {
+        Guild guild = Main.jda.getGuildById(IDs.serverID);
+        if (guild == null) {
+            System.out.println("[stats] serveur indisponible (reconnexion en cours), mise à jour ignorée");
+            return;
+        }
+
         StringBuilder messageRole = new StringBuilder();
         for (Role role : roles()) {
             if (role.equals(IDs.RoleGenshinImpact) || role.equals(IDs.RoleHomme) || role.equals(IDs.RolePC)) {
@@ -58,7 +68,6 @@ public final class StatsTimer {
         int bot = 0;
         int roleLess = 0;
         int onlyRules = 0;
-        Guild guild = Discord.guild();
         for (Member member : guild.getMembers()) {
             if (member.getUser().isBot()) {
                 bot++;
