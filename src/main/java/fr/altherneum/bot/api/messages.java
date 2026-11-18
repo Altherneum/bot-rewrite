@@ -30,7 +30,28 @@ public final class messages {
     }
 
     public static String BotReconnect() {
-        return "Le bot est **reconnecté** ⚡";
+        return BotReconnect(-1L);
+    }
+
+    public static String BotReconnect(long downtimeSeconds) {
+        if (downtimeSeconds < 0) {
+            return "Le bot est **reconnecté** ⚡";
+        }
+        return "Le bot est **reconnecté** ⚡ après " + formatDuration(downtimeSeconds);
+    }
+
+    private static String formatDuration(long totalSeconds) {
+        if (totalSeconds < 60) {
+            return totalSeconds + " s";
+        }
+        long seconds = totalSeconds % 60;
+        long minutes = totalSeconds / 60;
+        if (minutes < 60) {
+            return seconds == 0 ? minutes + " min" : minutes + " min " + seconds + " s";
+        }
+        long hours = minutes / 60;
+        minutes %= 60;
+        return minutes == 0 ? hours + " h" : hours + " h " + minutes + " min";
     }
 
     public static String LeaveMessage(User user) {

@@ -119,12 +119,12 @@ public final class Events {
             return;
         }
         System.out.println("[reconnect] reprise après " + (downtime / 1000L) + "s : message envoyé");
-        sendReconnectMessage();
+        sendReconnectMessage(downtime / 1000L);
     }
 
-    private static void sendReconnectMessage() {
+    private static void sendReconnectMessage(long downtimeSeconds) {
         try {
-            Discord.textChannel(IDs.Annonces).sendMessage(messages.BotReconnect()).queue();
+            Discord.textChannel(IDs.Annonces).sendMessage(messages.BotReconnect(downtimeSeconds)).queue();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
